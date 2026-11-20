@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "challengeId": "otp_00ef77625a606124",
+    "mobileNormalized": "+919014673747",
+    "codeHash": "5eae096528e9e700354af2a5cff31cbe6edeaa92dc412129bc90623960d75ac8",
+    "sandboxCode": "731144",
+    "channel": "voice",
+    "provider": "realtime_sandbox",
+    "expiresAt": 1794977652930,
+    "createdAt": 1794977352930,
+    "lastSentAt": 1794977352930,
+    "attempts": 0,
+    "maxAttempts": 5,
+    "verified": false
+  }
+]

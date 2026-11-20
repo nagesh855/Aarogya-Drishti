@@ -12,6 +12,12 @@ View your app in AI Studio: https://ai.studio/apps/e22e1bcd-7e1a-4d6f-979f-28114
 
 **Prerequisites:**  Node.js
 
+### Project folders
+
+- `frontend/` contains the React application, Vite entry page, and public assets.
+- `backend/` contains the Express server entry point and API, database, and WebSocket modules.
+- `shared/` contains types and utilities used by both frontend and backend.
+- Root package scripts coordinate development and production builds; run them from the project root.
 
 1. Install dependencies:
    `npm install`
