@@ -3,9 +3,9 @@ import express from 'express';
 import http from 'http';
 import net from 'net';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import helmet from 'helmet';
 import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
-import { createServer as createViteServer } from 'vite';
 import { dbStore } from './server/db/store.js';
 import { setupWebSocketServer } from './server/ws/socketServer.js';
 import { createVoiceLiveWss } from './server/ws/voiceLiveServer.js';
@@ -17,10 +17,19 @@ import { doctorRouter } from './server/routes/doctorRoutes.js';
 import { patientRouter } from './server/routes/patientRoutes.js';
 import { sharedRouter } from './server/routes/sharedRoutes.js';
 import { voiceRouter } from './server/routes/voiceRoutes.js';
-dotenv.config({ path: ['.env.local', '.env'] });
 
-const PORT = Number(process.env.PORT) || 3000;
-const isProduction = process.env.NODE_ENV === 'production';
+const backendDir = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(backendDir, '..');
+dotenv.config({
+  path: [
+    path.join(backendDir, '.env.local'),
+    path.join(backendDir, '.env'),
+    path.join(projectRoot, '.env.local'),
+    path.join(projectRoot, '.env'),
+  ],
+});
+
+const PORT = Number(process.env.PORT) || 3001;
 
 async function bootstrap() {
   await dbStore.initMongoIfConfigured();
@@ -134,22 +143,8 @@ async function bootstrap() {
     }
   });
 
-  if (!isProduction) {
-    const vite = await createViteServer({
-      server: { middlewareMode: true, hmr: false },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distDir = path.resolve(process.cwd(), 'frontend', 'dist');
-    app.use(express.static(distDir));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(distDir, 'index.html'));
-    });
-  }
-
   httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log(`Aarogya Drishti server listening on http://0.0.0.0:${PORT}`);
+    console.log(`Aarogya Drishti API listening on http://0.0.0.0:${PORT}`);
   });
 }
 

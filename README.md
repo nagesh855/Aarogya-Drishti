@@ -2,9 +2,9 @@
 <img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
 </div>
 
-# Run and deploy your AI Studio app
+# Aarogya Drishti
 
-This contains everything you need to run your app locally.
+The frontend and backend are independent npm packages in `frontend/` and `backend/`. Shared application types and utilities are in `shared/`.
 
 View your app in AI Studio: https://ai.studio/apps/e22e1bcd-7e1a-4d6f-979f-28114406eb8e
 
@@ -12,22 +12,31 @@ View your app in AI Studio: https://ai.studio/apps/e22e1bcd-7e1a-4d6f-979f-28114
 
 **Prerequisites:**  Node.js
 
-### Project folders
+Install and run each package in a separate terminal:
 
-- `frontend/` contains the React application, Vite entry page, and public assets.
-- `backend/` contains the Express server entry point and API, database, and WebSocket modules.
-- `shared/` contains types and utilities used by both frontend and backend.
-- Root package scripts coordinate development and production builds; run them from the project root.
+1. Backend terminal:
+   ```powershell
+   cd backend
+   npm install
+   Copy-Item .env.example .env.local
+   npm run dev
+   ```
+   The API listens on `http://localhost:3001`.
+2. Frontend terminal:
+   ```powershell
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   Open `http://localhost:3000`. Vite proxies API and WebSocket requests to the backend.
 
-1. Install dependencies:
-   `npm install`
-2. Create a `.env.local` file in the project root and add your Gemini API key:
+The backend reads configuration from `backend/.env.local`. Set the Gemini API key there:
    ```env
    GEMINI_API_KEY=your_gemini_api_key
    ```
    Keep this key private. For hosted deployments, configure `GEMINI_API_KEY` in the deployment platform's environment variables/secrets.
-3. Run the app:
-   `npm run dev`
+
+Build the frontend independently with `cd frontend; npm run build`. Type-check either package with `npm run typecheck` from its folder.
 
 ## Languages
 

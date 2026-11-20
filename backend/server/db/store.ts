@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import { MongoModels } from '../models/mongoSchemas.js';
@@ -36,7 +37,7 @@ export interface DatabaseState {
   settings: PlatformSettings;
 }
 
-const DATA_DIR = path.resolve(process.cwd(), '.data');
+const DATA_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../.data');
 const DB_FILE = path.join(DATA_DIR, 'aarogya_drishti_db.json');
 export const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
 

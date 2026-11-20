@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 export type OtpDeliveryChannel = 'sms' | 'voice';
 export type OtpDeliveryProvider = 'twilio' | 'msg91' | 'realtime_sandbox';
@@ -39,7 +40,7 @@ export interface OtpRealtimeEvent {
   timestamp: string;
 }
 
-const DATA_DIR = path.resolve(process.cwd(), '.data');
+const DATA_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../.data');
 const OTP_STORE_FILE = path.join(DATA_DIR, 'otp_challenges.json');
 const RESEND_COOLDOWN_MS = 30 * 1000;
 const MAX_ATTEMPTS = 5;
