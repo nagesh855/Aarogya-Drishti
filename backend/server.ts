@@ -19,6 +19,7 @@ import { patientRouter } from './server/routes/patientRoutes.js';
 import { sharedRouter } from './server/routes/sharedRoutes.js';
 import { voiceRouter } from './server/routes/voiceRoutes.js';
 
+
 const backendDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(backendDir, '..');
 dotenv.config({
