@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import fs from 'fs';
 import http from 'http';
 import net from 'net';
 import path from 'path';
@@ -111,6 +112,17 @@ async function bootstrap() {
       timestamp: new Date().toISOString(),
     });
   });
+
+  const frontendDistDir = path.join(projectRoot, 'frontend', 'dist');
+  if (fs.existsSync(frontendDistDir)) {
+    app.use(express.static(frontendDistDir));
+    app.get('*', (req, res, next) => {
+      if (req.path === '/api' || req.path.startsWith('/api/')) {
+        return next();
+      }
+      res.sendFile(path.join(frontendDistDir, 'index.html'));
+    });
+  }
 
   // Error handler for Multer & JSON errors
   app.use(

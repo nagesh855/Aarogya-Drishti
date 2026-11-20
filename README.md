@@ -38,6 +38,18 @@ The backend reads configuration from `backend/.env.local`. Set the Gemini API ke
 
 Build the frontend independently with `cd frontend; npm run build`. Type-check either package with `npm run typecheck` from its folder.
 
+## Deploy to Render
+
+This repository includes `render.yaml` for a single Render Web Service. Create or update the service using the Blueprint, and keep its Root Directory empty (the repository root). The build installs and builds `frontend/` and installs `backend/` independently; the backend serves the compiled frontend and API on the same origin.
+
+If configuring an existing service manually, use:
+
+- **Build Command:** `npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend --include=dev`
+- **Start Command:** `npm start --prefix backend`
+- **Health Check Path:** `/api/health`
+
+Set `GEMINI_API_KEY`, `MONGODB_URI`, and a strong `JWT_SECRET` in the Render environment. Configure MongoDB for persistent application data; Render's local filesystem is ephemeral unless a persistent disk is attached.
+
 ## Languages
 
 Use the language selector beside **AI Voice Guide** to switch between Telugu, English, and Hindi. The selection is saved in the browser and applies across the public site and role portals. The AI Voice Guide follows the selected language; patient-provided and clinical record text is kept as entered rather than automatically rewritten.
