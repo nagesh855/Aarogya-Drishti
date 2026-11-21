@@ -1,5 +1,7 @@
 const TOKEN_KEY = 'aarogya_drishti_token';
 
+const API_BASE_URL = 'https://aarogya-drishti-backend-c2jk.onrender.com';
+
 export function getStoredToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -25,7 +27,7 @@ export async function apiRequest<T = unknown>(
     headers.set('Content-Type', 'application/json');
   }
 
-  const res = await fetch(url, {
+  const res = await fetch(`${API_BASE_URL}${url}`, {
     ...options,
     headers,
   });
@@ -49,7 +51,8 @@ export async function apiRequest<T = unknown>(
 
 export function authenticatedFileUrl(pathUrl: string): string {
   const token = getStoredToken();
-  if (!token) return pathUrl;
-  const separator = pathUrl.includes('?') ? '&' : '?';
-  return `${pathUrl}${separator}token=${encodeURIComponent(token)}`;
+  const fullUrl = `${API_BASE_URL}${pathUrl}`;
+  if (!token) return fullUrl;
+  const separator = fullUrl.includes('?') ? '&' : '?';
+  return `${fullUrl}${separator}token=${encodeURIComponent(token)}`;
 }

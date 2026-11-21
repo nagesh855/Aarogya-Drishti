@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
+import cors from 'cors'
 import net from 'net';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -47,7 +48,7 @@ async function bootstrap() {
       crossOriginEmbedderPolicy: false,
     })
   );
-
+  app.use(cors())
   app.use(express.json({ limit: '2mb' }));
   app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
